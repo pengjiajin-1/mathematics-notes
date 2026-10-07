@@ -1,3 +1,3 @@
-# Sobolev Space and Modern PDE
+# Sobolev Space and Introduction to Modern PDE
 
-Notes on 'Sobolev Space' and 'Modern PDE' in fdu.
+Notes on 'Sobolev Space' and 'Introduction to Modern PDE' in fdu.
