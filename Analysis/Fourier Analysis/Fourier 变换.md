@@ -226,6 +226,11 @@ $`(1)`$ 若 $`f \in L^1(\mathbb{R}^n)`$, 则
 ```math
 \widehat{\delta_a f}(\xi) = a^{-n} \hat{f}\left( \frac{\xi}{a} \right).
 ```
+即 $\delta_a\cdot$ 和 $\cdot _a$ 在 $\hat{\cdot}$ 的一内一外: 
+  
+```math
+\widehat{\delta_a f} = \hat{(f)}_a, \quad \delta_a\widehat{f} = \widehat{f_a}.
+```
 
 $`(2)`$
 
@@ -438,19 +443,7 @@ $`(2)`$.  利用 $`(1)`$ 及 Fubini 定理.
 
 **$`(2)`$** $`\widehat{\delta_\varepsilon\phi}=\phi_\varepsilon`$, 即 $`\widehat{\phi(\varepsilon x)}(\xi)= \varepsilon^{-n} \hat{\phi}\left( \frac{\xi}{\varepsilon} \right)= \phi_\varepsilon(\xi)`$
 
-**pf.** 由伸缩性质:
-
-```math
-\widehat{f(ax)}(\xi) = a^{-n} \hat{f}\left( \frac{\xi}{a} \right), \qquad a > 0.
-```
-
-则
-
-```math
-\widehat{\varepsilon^{-n} \phi\left( \frac{\xi}{\varepsilon} \right)}
-= \varepsilon^{-n} \cdot \varepsilon^n \hat{\phi}(\varepsilon \xi)
-= \hat{\phi}(\varepsilon \xi).
-```
+**pf.** 伸缩性质结合 $`\hat{\phi}=\phi`$.
 
 ---
 
