@@ -1,6 +1,6 @@
 # Fourier 变换
 
-> 主要定义过程参考 Lieb and Loss 的"Analysis".
+> 内容主要参考 Lieb and Loss 的"Analysis".
 
 ---
 
@@ -115,7 +115,7 @@ $`(3)`$ 采用逼近方法.
 
 ---
 
-## R-L 引理的推论
+### R-L 引理的推论
 
 作为 R-L 引理的推论, 我们证明下面的数学分析中的命题.
 
@@ -205,10 +205,9 @@ $`(3)`$ 采用逼近方法.
 
 ---
 
-## Fourier 变换的基本性质
+### Fourier 变换的基本性质
 
 > 乘多项式的傅里叶变换是傅里叶变换的导数, 导数的傅里叶变换是傅里叶变换乘多项式.
-
 > 可导性看无穷远性质, 导数转嫁衰减性.
 
 **Prop)**
@@ -224,12 +223,19 @@ $`(1)`$ 若 $`f \in L^1(\mathbb{R}^n)`$, 则
 - 伸缩:  $`\delta_a f(x) := f(ax)`$, $`a > 0`$,
 
 ```math
-\widehat{\delta_a f}(\xi) = a^{-n} \hat{f}\left( \frac{\xi}{a} \right).
+\widehat{\delta_a f}(\xi) = a^{-n} \hat{f}\left( \frac{\xi}{a} \right), \quad \delta_a\widehat{f}(\xi) = \widehat{a^{-n} f\left( \frac{x}{a} \right)}.
 ```
-即 $\delta_a\cdot$ 和 $\cdot _a$ 在 $\hat{\cdot}$ 的一内一外: 
-  
+
+即 $`\delta_a \, \cdot`$ 和 $`\cdot\, _a`$ 在 $`\hat{\cdot}`$ 的一内一外:
+
 ```math
 \widehat{\delta_a f} = \hat{(f)}_a, \quad \delta_a\widehat{f} = \widehat{f_a}.
+```
+
+- 旋转:  设 $`R`$ 是 $`n`$ 阶正交矩阵,
+
+```math
+\widehat{f(R\cdot)}(\xi)=\widehat f(R\xi).
 ```
 
 $`(2)`$
@@ -240,10 +246,22 @@ $`(2)`$
 \frac{\partial}{\partial \xi_k} \hat{f}(\xi) = \widehat{(-2\pi i x_k f)}(\xi).
 ```
 
+特别, 若 $`f\in S`$,
+
+```math
+\partial^\alpha\hat{f}(\xi) = \widehat{\bigg((-2\pi i x)^\alpha f\bigg)}(\xi).
+```
+
 2\. 若 $`f`$ 及其弱导数 $`\partial f / \partial x_k \in L^1(\mathbb{R}^n)`$, 则
 
 ```math
 \widehat{\frac{\partial f}{\partial x_k}}(\xi) = 2\pi i \xi_k \hat{f}(\xi).
+```
+
+特别, 若 $`f\in S`$,
+
+```math
+\widehat{\partial^\alpha f}(\xi) = (2\pi i \xi)^\alpha \hat{f}(\xi).
 ```
 
 **$`(3)`$** 若 $`f, g \in L^1(\mathbb{R}^n)`$, 则
@@ -383,7 +401,7 @@ f(x_1, x_2, \dots, x_n)
 
 ---
 
-## Fourier 变换的不动点: Gauss 函数
+### Fourier 变换的不动点: Gauss 函数
 
 **Prop)**
 
@@ -447,7 +465,7 @@ $`(2)`$.  利用 $`(1)`$ 及 Fubini 定理.
 
 ---
 
-## 反演公式
+### 反演公式
 
 **Prop)**
 
@@ -501,7 +519,7 @@ f(x) = \int_{\mathbb{R}^n} \hat{f}(\xi) e^{2\pi i x \cdot \xi} \, d\xi \quad \te
 \Rightarrow f(t) = \int \hat{f}(x) e^{2\pi i x t} \, dx.
 ```
 
-> Notice: Gauss 核 $`\{\phi_\varepsilon\}`$, 也叫热核, 因为 $`\phi(x) = e^{-\pi|x|^2}`$,  $`\phi_{2\sqrt{\pi t}} (x)`$ 就是热方程的基本解. 它们虽然不紧支撑, 但和标准磨光子一样有很多好的磨光性质.
+> Rmk: Gauss 核 $`\{\phi_\varepsilon\}`$, 也叫热核, 因为 $`\phi(x) = e^{-\pi|x|^2}`$,  $`\phi_{2\sqrt{\pi t}} (x)`$ 就是热方程的基本解. 它们虽然不紧支撑, 但和标准磨光子一样有很多好的磨光性质.
 
 ---
 
@@ -564,6 +582,523 @@ h_a(y) = \left( \sqrt{\frac{\pi}{a}} \right)^n e^{-\frac{\pi^2 |y|^2}{a}}
 
 ```math
 \Rightarrow \|\hat{f}\|_{L^2} = \|f\|_{L^2}.
+```
+
+---
+
+## $`L^2`$ 上的 Fourier 变换(稠密延拓)
+
+**将 $`L^1\cap L^2`$ 上的 Fourier 变换延拓为 $`L^2`$ 上的 Fourier 变换**
+
+- 本质是有界线性算子的稠密延拓, 这里把具体延拓过程写出;
+
+- $`C^\infty_c \subset L^1 \cap L^2`$, 于是 $`L^1(\mathbb{R}^n) \cap L^2(\mathbb{R}^n)`$ 在 $`L^2(\mathbb{R}^n)`$ 中稠密: $`\forall f \in L^2, \exists \{\varphi_k\} \subset L^1 \cap L^2`$, s.t. $`\|\varphi_k - f\|_{L^2} \to 0`$.
+
+由 Plancherel 定理:
+
+```math
+\|\hat{\varphi}_k - \hat{\varphi}_{k+p}\|_{L^2} = \|\varphi_k - \varphi_{k+p}\|_{L^2}
+```
+
+又 $`L^2`$ 完备, 故 $`\exists g \in L^2`$, s.t.
+
+```math
+\|\hat{\varphi}_k - g\|_{L^2} \to 0
+```
+
+**定义**
+
+```math
+\hat{f} := g
+```
+
+**well-defined: **  如果还有 $`\{\psi_k\} \subset L^1 \cap L^2, \|\hat{\psi}_k - g_2\|_{L^2} \to 0`$, 则
+
+```math
+\|\hat{\varphi}_k - \hat{\psi}_k\|_{L^2} = \|\varphi_k - \psi_k\|_{L^2}
+\Rightarrow \|g - g_2\|_{L^2} = 0 \Rightarrow g_2 \stackrel{\text{a.e.}}{=} g
+```
+
+> Rmk: 若 $`f \in L^1 \cap L^2`$, 则 $`f`$ 作为 $`L^1, L^2`$ 的 Fourier 变换一致.
+
+下面命题的是有界线性算子延拓的结果, 说明 $`\wedge`$ 为 $`L^2(\mathbb{R}^n)`$ 上的等距线性映射.
+
+**Prop)** 设 $`f, g \in L^2(\mathbb{R}^n)`$, 则
+
+**$`(1)`$** 能量不损失:
+
+```math
+\|f\|_{L^2} = \|\hat{f}\|_{L^2}
+```
+
+**$`(2)`$** 在 $`L^2`$ 范数意义下: (第二个等式的证明要用到反演公式)
+
+```math
+\hat{f}(\xi) = \lim_{N \to \infty} \int_{|x| < N} f(x)e^{-2\pi i x \xi} \, dx
+```
+
+```math
+f(x) = \lim_{N \to \infty} \int_{|\xi| < N} \hat{f}(\xi) e^{2\pi i x \xi} \, d\xi
+```
+
+这给出了一个具体的逼近.
+
+**$`(3)`$** Parseval 等式:
+
+```math
+\int_{\mathbb{R}^n} f \bar{g} = \int_{\mathbb{R}^n} \hat{f} \overline{\hat{g}}, \qquad \text{i.e. } \langle f, g \rangle = \langle \hat{f}, \hat{g} \rangle
+```
+
+**pf.** **$`(1)`$**
+
+```math
+\|f\|_{L^2} = \lim \|\varphi_k\|_{L^2} = \lim \|\hat{\varphi}_k\|_{L^2} = \|\hat{f}\|_{L^2}, \qquad \varphi_k \in L^1 \cap L^2
+```
+
+**$`(2)`$** 令
+
+```math
+f_N := f \cdot \chi_{B(0, N)} \Rightarrow f_N \in L^1 \cap L^2
+```
+
+且
+
+```math
+\|f - f_N\|_{L^2} \to 0
+```
+
+由 $`(1)`$
+
+```math
+\Rightarrow \|\hat{f} - \hat{f}_N\|_{L^2} \to 0, \qquad \hat{f}_N(\xi) = \int_{B(0, N)} f(x) e^{-2\pi i x \xi} \, dx
+```
+
+由于 $`\hat{f} \in L^2`$, 有
+
+```math
+\hat{\hat{f}}(x) = \lim_{N \to \infty} \int_{B(0, N)} \hat{f}(\xi) e^{-2\pi i x \xi} \, d\xi \quad \text{in } L^2
+```
+
+```math
+\hat{\hat{f}}(-x) = \lim_{N \to \infty} \int_{B(0, N)} \hat{f}(\xi) e^{2\pi i x \xi} \, d\xi
+```
+
+由反演公式,
+
+```math
+f=\mathcal F^{-1}(\mathcal Ff) =R\mathcal F(\mathcal Ff) =R\mathcal F^2f.
+```
+
+**$`(3)`$** 内积可由范数表达:
+
+```math
+\langle f, g \rangle_{L^2, L^2}
+= \frac{1}{2} \left\{ \|f + g\|_2^2 + i\|f + ig\|_2^2 - (1 + i)\|f\|_2^2 - (1 + i)\|g\|_2^2 \right\}
+```
+
+因为 Fourier 变换是线性的, 所以
+
+```math
+\langle \hat{f}, \hat{g} \rangle_{L^2, L^2} = \langle f, g \rangle_{L^2, L^2}
+```
+
+---
+
+### $`L^2`$ 上的反演公式及 Fourier 逆变换
+
+设 $`f \in L^2(\mathbb{R}^n)`$, 令
+
+```math
+\check{f}(x) = \hat{f}(-x)
+```
+
+则 $`\vee`$ 是 $`\wedge`$ 的逆映射, 即
+
+```math
+(\hat{f})^\vee = f, \quad (\check{f})^\wedge = f
+```
+
+**pf.** 只证明第一个等式, 第二个用同样的方法可以证明.
+
+① 当 $`\hat{f} \in L^1 \cap L^2`$ 时: 对 $`\forall g \in L^1 \cap L^2`$(test function), 因为 $`\hat{f}, g`$ 都是 $`L^1`$ 的, 可以使用 Fubini 定理,
+
+```math
+\int_{\mathbb{R}^n} \check{\hat{f}} \, \bar{g}
+= \int_{\mathbb{R}^n} \hat{\hat{f}}(-x) \overline{g(x)} \, dx
+```
+
+```math
+= \int_{\mathbb{R}^n} \left( \int_{\mathbb{R}^n} \hat{f}(t) e^{-2\pi i (-x) t} \, dt \right) \overline{g(x)} \, dx
+```
+
+```math
+= \int_{\mathbb{R}^n} \overline{\hat{g}} \, \hat{f}
+= \int_{\mathbb{R}^n} f \, \bar{g}
+```
+
+对 $`\forall g \in L^2`$, 取 $`\{g_k\} \subset L^1 \cap L^2, \|g_k - g\|_{L^2} \to 0`$,  则
+
+```math
+\int_{\mathbb{R}^n} \check{\hat{f}} \, \bar{g}
+= \lim_{k \to \infty} \int_{\mathbb{R}^n} \check{\hat{f}} \, \overline{g_k}
+= \lim_{k \to \infty} \int_{\mathbb{R}^n} f \, \overline{g_k}
+= \int_{\mathbb{R}^n} f \, \bar{g}
+```
+
+```math
+\Rightarrow \int_{\mathbb{R}^n} (\check{\hat{f}} - f) \, \bar{g} = 0
+```
+
+取 $`g = \check{\hat{f}} - f \in L^2`$, 得
+
+```math
+\check{\hat{f}} \stackrel{\text{a.e.}}{=} f
+```
+
+② 一般地, 当 $`\hat{f} \in L^2`$ 时:  取 $`\{f_k\} \subset L^2`$ (可以取速降函数), s.t. $`\hat{f}_k \in L^1 \cap L^2`$, 且 $`\|\hat{f}_k - \hat{f}\|_{L^2} \to 0`$
+
+```math
+\implies \check{\hat{f}} = \lim \check{\hat{f}}_k = \lim f_k = f \quad \text{in } L^2
+```
+
+> $`\wedge`$ 为 $`L^2(\mathbb{R}^n)`$ 到 $`L^2(\mathbb{R}^n)`$ 的等距同构, 是酉算子(保内积的线性满射算子 cf."108"P212).
+
+---
+
+## $`L^p(\mathbb{R}^n)`$ 上的 Fourier 变换$`(1 < p < 2)`$
+
+对 $`1 < p < 2, f \in L^p(\mathbb{R}^n)`$,  $`L^p \subset WL^p \subset L^1 + L^2`$ (cf. GTM249 Ex1.1.10). 事实上, 令
+
+```math
+f_1 := f(x) \chi_{\{|f| \ge 1\}}, \qquad f_2 := f(x) \chi_{\{|f| < 1\}}, \qquad f = f_1 + f_2
+```
+
+则
+
+```math
+\int |f_1| \le \int_{\{|f| \ge 1\}} |f|^p < \infty, \qquad
+\int |f_2|^2 = \int_{\{|f| < 1\}} |f|^2 \le \int_{\{|f| < 1\}} |f|^p < \infty
+```
+
+**Def) $`L^1 + L^2`$ 上的 Fourier 变换**.
+
+$`\forall f \in L^1(\mathbb{R}^n) + L^2(\mathbb{R}^n), f=f_1+f_2`$,
+
+```math
+\hat{f} := \hat{f}_1 + \hat{f}_2
+```
+
+于是, 可以定义 $`L^p(\mathbb{R}^n)`$ 上的 Fourier 变换$`(1 < p < 2)`$.
+
+> Rmk: 像定义 $`L^2`$ 上的 Fourier 变换那样, 同样可以用 $`L^1 \cap L^p`$ 函数逼近来定义, 它们都是一致的定义. 关于定义的一致性, 后面会证明这些逼近的定义都等价于速降函数逼近的定义, 也等价于缓增分布的 Fourier 变换的定义.
+
+**well-defined: ** 设 $`f \in L^p(1 < p < 2), f = f_1 + f_2 = g_1 + g_2`$, 则
+
+```math
+\hat{f}_1 + \hat{f}_2 = \hat{g}_1 + \hat{g}_2
+```
+
+事实上
+
+```math
+f_1 - g_1 = g_2 - f_2 \in L^1 \cap L^2
+\implies \hat{f}_1 - \hat{g}_1 = \hat{g}_2 - \hat{f}_2
+```
+
+---
+
+### 卷积的 Fourier 变换
+
+**Thm)** 设 $`f \in L^1, g \in L^p(1 \le p \le 2)`$, 则
+
+```math
+\widehat{f * g}(x) = \hat{f}(x) \, \hat{g}(x), \qquad \text{a.e. } x \in \mathbb{R}^n
+```
+
+**pf.** $`p=1`$ 已经证明, $`p=2`$ 利用逼近容易证明. 下面设 $`1<p<2`$. 由 Young 不等式 $`f*g \in L^p`$. 设 $`g = g_1 + g_2, g_1 \in L^1, g_2 \in L^2`$, 则
+
+```math
+\hat{h} = \widehat{(f * g_1 + f * g_2)}
+= \hat{f} \, \hat{g}_1 + \hat{f} \, \hat{g}_2
+= \hat{f} \, \hat{g}
+```
+
+**Hausdorff-Young 不等式.** $`\forall f \in L^p(\mathbb{R}^n) (1 \le p \le 2)`$,
+
+```math
+\|\hat{f}\|_{L^{p'}} \le \|f\|_{L^p}
+```
+
+**证明** 已知
+
+```math
+\|\hat{f}\|_{L^\infty} \le \|f\|_{L^1}, \qquad \|\hat{f}\|_{L^2} = \|f\|_{L^2}
+```
+
+Riesz-Thorin 插值定理 $`\Rightarrow`$ 对 $`\forall p \in (1, 2)`$:
+
+```math
+\begin{cases}
+\dfrac{1}{p} = \dfrac{1 - t}{1} + \dfrac{t}{2} \\[8pt]
+\dfrac{1}{q} = \dfrac{1 - t}{\infty} + \dfrac{t}{2}
+\end{cases}
+```
+
+```math
+\Rightarrow \frac{1}{q} = \frac{t}{2} = 1 - \frac{1}{p} \Rightarrow q = p' \Rightarrow \|\hat{f}\|_{L^{p'}} \le \|f\|_{L^p}
+```
+
+我们给出如下推广的卷积 Fourier 变换公式:
+
+**Thm)** 设 $`f \in L^p(\mathbb{R}^n), g \in L^q(\mathbb{R}^n), 1 + \frac{1}{r} = \frac{1}{p} + \frac{1}{q}, 1 \le p, q, r \le 2`$, 则
+
+```math
+\widehat{f * g}(x) = \hat{f}(x) \, \hat{g}(x)
+```
+
+**pf.** 由 Young 不等式, $`f*g \in L^r`$, 故 $`\widehat{f*g}`$ 有意义. 由 Hausdorff-Young 不等式,
+
+```math
+\hat{f} \in L^{p'}, \qquad \hat{g} \in L^{q'}
+```
+
+由 Hölder 不等式, $`\hat{f} \hat{g} \in L^{r'}`$:
+
+```math
+\frac{1}{r'} = \frac{1}{p'} + \frac{1}{q'}
+```
+
+令 $`h := f*g \in L^r`$, 由 Hausdorff-Young, $`\hat{h} \in L^{r'}`$.
+
+先假设 $`f \in L^1 \cap L^p, g \in L^1 \cap L^q`$, 则有
+
+```math
+\widehat{f * g} = \hat{f} \, \hat{g}
+```
+
+对一般的 $`f \in L^p, g \in L^q`$, 由逼近过程可得: 取 $`\{f_n\} \subset L^1 \cap L^p, \{g_n\} \subset L^1 \cap L^q`$ 使得
+
+```math
+f_n \to f \text{ in } L^p, \qquad g_n \to g \text{ in } L^q
+```
+
+则
+
+```math
+\hat{f_n} \to \hat{f} \text{ in } L^{p'}, \qquad \hat{g_n} \to \hat{g} \text{ in } L^{q'}
+```
+
+由 Holder 不等式,
+
+```math
+\widehat{f_n * g_n}-\widehat{f * g} = \hat{f}_n(\hat{g}_n - \hat{g}) + \hat{g}(\hat{f}_n - \hat{f})\to 0 \text{ in } \ L^{r'}.
+```
+
+所以, 对 a.e. x 有
+
+```math
+\widehat{f * g} = \lim \widehat{f_n * g_n} = \lim \hat{f}_n \cdot \hat{g}_n = \hat{f} \cdot \hat{g}
+```
+
+---
+
+## $`|x|^{\alpha-n}`$ 的 Fourier 变换
+
+设 $`f \in C_c^\infty(\mathbb{R}^n), 0 < \alpha < n`$, 则
+
+```math
+C_\alpha \left( |\cdot|^{- \alpha} \hat{f}(\cdot) \right)^\vee(x)
+= C_{n - \alpha} \int_{\mathbb{R}^n} |x - y|^{\alpha - n} f(y) \, dy
+```
+
+其中
+
+```math
+C_\alpha := \frac{\Gamma(\alpha/2)}{\pi^{n/2}}
+```
+
+cf. "Analysis"P180.
+
+---
+
+## $`S`$ 上 Fourier 变换
+
+> 大部分教材先讨论 $`S`$ 上 Fourier 变换, 它有着最丰富的性质. 然后自然的延拓为 $`L^2`$ 上的酉算子. 它是强 $`(1, \infty)`$ 有界的, 所以可以延拓到 $`L^1`$ 上, 再由插值定理建立 Hausdorff-Young 不等式, 进而可以延拓到 $`L^p(1\leq p\leq 2)`$ 上. 对于 $`L^p(2< p\leq\infty)`$ 函数, 多项式函数(缓增分布的常义函数)的 Fourier 变换, 都归结于缓增分布的 Fourier 变换.
+
+本节有两个任务, 一个是叙述 $`S`$ 上 Fourier 变换的良好性质, 另一个则是证明 $`L^p(1\leq p\leq 2)`$ 函数的两种 Fourier 变换的一致性.
+
+**Prop)**  $`\wedge`$: $`S \to S`$ 是线性的双射, 其逆变换为
+
+```math
+\vee: S \to S, \qquad u \mapsto \int_{\mathbb{R}^n} u(x) e^{2\pi i x \xi} \, dx
+```
+
+且是序列连续的(S 是拓扑线性空间), 此外还满足
+
+```math
+\langle u, v\rangle_{L^2, L^2}=\langle \hat{u}, \hat{v} \rangle_{L^2, L^2}\quad\forall u, v\in S.
+```
+
+---
+
+### $`L^q(1 \le q \le \infty)`$ 到 $`S'`$ 的嵌入
+
+我们知道 $`S \subset L^p(1 \le p \le \infty)`$, 下面说明:
+
+```math
+L^q (1 \le q \le \infty) \hookrightarrow S'
+```
+
+良定性: 定义 $`L^q \to S'`$ 映射:
+
+```math
+f \mapsto T_f, \qquad T_f(\phi) = \int f(x) \phi(x) \, dx, \quad \forall \phi \in S
+```
+
+设 $`\varphi_n \to 0`$ in $`S`$, 往证 $`T_f(\varphi_n) \to 0`$.
+
+① $`q = 1`$:
+
+```math
+|T_f(\phi_n)| \le \|f\|_{L^1} \sup_{x \in \mathbb{R}^n} |\phi_n(x)| \to 0
+```
+
+② $`1 < q \leq \infty`$:
+
+```math
+|T_f(\phi_n)| \le \|f\|_q \|\phi_n\|_{q'}
+```
+
+取 $`t \in \mathbb{N}`$ 满足 $`tq' > N`$, 则
+
+```math
+|\phi_n(x)| \le \sup \left| (1 + |x|)^t \phi_n(x) \right| \left( \frac{1}{1 + |x|} \right)^t
+```
+
+```math
+\|\phi_n\|_{q'}
+\le \sup \left| (1 + |x|)^t \phi_n(x) \right|
+\left( \int \left( \frac{1}{1 + |x|} \right)^{tq'} dx \right)^{\frac{1}{q'}}
+\to 0
+```
+
+单射性: $`\forall f, g \in L^q`$, 则 $`f, g \in L^1_{\mathrm{loc}}`$, 由变分学基本引理:
+
+```math
+T_f = T_g \Rightarrow f = g
+```
+
+(这是 $`L^1_{loc}`$ 函数特有的, $`S' \hookrightarrow D'`$ 单射只能用稠性)
+
+- 对 $`1 < q \le \infty`$ 的泛函证法: 若
+
+```math
+\int (f(x) - g(x)) \phi(x) \, dx = 0, \qquad \forall \phi \in S
+```
+
+由 $`S`$ 在 $`L^{q'}`$ 中稠密,
+
+```math
+\int (f - g) \phi = 0, \qquad \forall \phi \in L^{q'}
+```
+
+即 $`f - g`$ 是 $`L^{q'}`$ 上的零泛函. 由 Riesz 表示定理的等距性,
+
+```math
+f - g = 0 \quad \text{in } L^q
+```
+
+---
+
+### 拓扑线性空间的对偶嵌入
+
+**Prop)** 设 $`X, Y`$ 为线性向量空间, $`X \to Y`$(连续, 稠密), 即存在
+
+```math
+i: X \to Y
+```
+
+线性连续且 $`i(X)`$ 在 $`Y`$ 中稠密, 则限制泛函是 $`Y^*`$ 到 $`X^*`$ 的嵌入(单射), 这里的限制泛函等于 $`i^T`$.
+
+**pf.** 良定:  $`i`$ 连续 $`\Rightarrow y^* \circ i`$ 连续线性, 即
+
+```math
+y^* \mapsto y^* \circ i, \qquad y^* \circ i \in X^*
+```
+
+单射:  若 $`y_1^*, y_2^* \in Y^*`$ 且 $`y_1^* \circ i = y_2^* \circ i`$. $`\forall y \in Y, \exists \{x_n\} \subset X`$, s.t. $`i(x_n) \to y`$, 则
+
+```math
+y_1^*(y) = \lim y_1^* \circ i(x_n)
+= \lim y_2^* \circ i(x_n)
+= y_2^*(y)
+```
+
+```math
+\Rightarrow y_1^* = y_2^*
+```
+
+**应用**
+
+**$`1`$.** $`C_c^\infty \subset S \subset C^\infty`$, 每个包含中恒等嵌入是连续的(拓扑的强弱), 且依次稠密
+
+```math
+\Rightarrow \mathcal{E}' \hookrightarrow \mathcal{S}' \hookrightarrow \mathcal{D}'
+```
+
+**$`2`$.** $`S \subset L^p(1 \le p < \infty)`$, 恒等嵌入连续, 且 $`S`$ 在 $`L^p`$ 中稠密
+
+```math
+\Rightarrow L^{p'} \hookrightarrow S'
+```
+
+这直接得到了 $`L^q \hookrightarrow S'`$ 的 $`1 \le q < \infty`$ 情形.
+
+**$`3`$.** 命题中的稠密性不可去:
+
+① $`X = \{\theta\}`$, $`Y`$ 非平凡, 则 $`X^*`$ = {零泛函};
+
+② $`X = \{ x \in \mathbb{R}^2 : (x, 0) \}, Y = \mathbb{R}^2`$, 则 $`X^* \cong \mathbb{R}, \quad Y^* \cong \mathbb{R}^2`$
+
+---
+
+### 两种定义在 $`L^p(1 \le p \le 2)`$ 上的一致性
+
+- 稠密延拓: $`\Lambda_1`$:  $`L^p \to L^{p'}`$,
+
+```math
+f \mapsto \hat{f}^1 = L^{p'}\text{-}\lim \hat{f}_n, \text{ 其中 } f_n \to f \text{ in } L^p, \ f_n \in S
+```
+
+- 缓增分布的 Fourier 变换: $`\Lambda_2`$: $`L^p \to L^{p'}`$,
+
+```math
+f \mapsto \hat{f}^2 \quad \langle \hat{f}^2, \varphi \rangle := \langle f, \hat{\varphi} \rangle
+```
+
+> 两种定义在 $`p=1, 2`$ 时一致, 由 Riezs 插值定理, 它们都是 $`L^p(1 \le p \le 2)\to L^{p'}`$ 的有界线性算子, 并且在稠子集 $`S`$ 上一致, 所以在 $`L^p(1 \le p \le 2)`$ 一致. 下面直接证明.
+
+**pf.** 对 $`\varphi \in S`$:
+
+```math
+\langle \hat{f}^1, \varphi \rangle = \int \hat{f}^1(x) \varphi(x) \, dx
+```
+
+```math
+= \lim_{n \to \infty} \int \hat{f}_n(x) \varphi(x) \, dx
+= \lim_{n \to \infty} \int \varphi(x) \int f_n(s) e^{-2\pi i s x} \, ds \, dx
+```
+
+($`\varphi \in L^1, f_n \in L^1`$, 可换序)
+
+```math
+= \lim_{n \to \infty} \int f_n(s) \, \hat{\varphi}(s) \, ds
+= \int f(s) \, \hat{\varphi}(s) \, ds
+= \langle f, \hat{\varphi} \rangle
+```
+
+```math
+\Rightarrow \hat{f}^1 \stackrel{\text{a.e.}}{=} \hat{f}^2
 ```
 
 ---
